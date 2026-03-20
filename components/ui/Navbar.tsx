@@ -4,20 +4,15 @@ import Link from 'next/link'
 import { Menu, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
-// @lpg: Update navLinks labels and hrefs to match the company's page type.
-// For 1-Page: use anchor links (#services, #about, #contact)
-// For 5-Pages: use real routes (/about, /services, /contact, /faq)
-// IMPORTANT: Keep this static array — only change label/href values.
-// Do NOT replace with .map() on a string array or compute hrefs dynamically.
 const navLinks = [
-  { label: 'Services', href: '#services' },
-  { label: 'About',    href: '#about'    },
-  { label: 'Contact',  href: '#contact'  },
+  { label: 'Features', href: '#features' },
+  { label: 'Solutions', href: '#solutions' },
+  { label: 'Pricing', href: '#pricing' },
+  { label: 'About', href: '#about' },
 ]
 
-// @lpg: Replace with real company name and CTA
-const BRAND_NAME = 'Company Name'
-const CTA = { label: 'Get Started', href: '#contact' }
+const BRAND_NAME = 'Toolify AI'
+const CTA = { label: 'Start Free Trial', href: '#trial' }
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -34,16 +29,24 @@ export default function Navbar() {
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
         scrolled
-          ? 'bg-surface/95 backdrop-blur-md border-b border-surface-border shadow-card'
+          ? 'bg-[#0f172a]/95 backdrop-blur-md border-b border-[#334155] shadow-card'
           : 'bg-transparent',
       )}
     >
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-500/50 to-transparent pointer-events-none" />
       <nav className="max-w-7xl mx-auto px-6 flex items-center justify-between h-nav">
         <Link
           href="/"
-          className="font-heading font-bold text-xl text-content-primary hover:text-brand-500 transition-colors"
+          className="flex items-center gap-3 group"
         >
-          {BRAND_NAME}
+          <img 
+            src="https://u5ft5besqtymo1lf.public.blob.vercel-storage.com/logos/1773984709256-ai-artificial-intelligence-improves-emai-600nw-2655586379.webp" 
+            alt="Toolify AI logo" 
+            className="h-10 w-auto object-contain" 
+          />
+          <span className="font-heading font-bold text-xl text-content-primary group-hover:text-brand-500 transition-colors">
+            {BRAND_NAME}
+          </span>
         </Link>
 
         <ul className="hidden md:flex items-center gap-1">
@@ -60,12 +63,15 @@ export default function Navbar() {
         </ul>
 
         <div className="hidden md:flex items-center gap-3">
-          <a
-            href={CTA.href}
-            className="px-5 py-2.5 text-sm font-medium bg-brand-500 text-content-inverse rounded-card hover:bg-brand-700 hover:shadow-glow-sm transition-all"
-          >
-            {CTA.label}
-          </a>
+          <div className="relative">
+            <div className="absolute inset-0 bg-brand-500/40 blur-xl rounded-pill scale-110 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <a
+              href={CTA.href}
+              className="relative px-5 py-2.5 text-sm font-medium bg-brand-500 text-content-inverse rounded-card hover:bg-brand-700 hover:shadow-glow-sm transition-all"
+            >
+              {CTA.label}
+            </a>
+          </div>
         </div>
 
         <button
@@ -94,7 +100,8 @@ export default function Navbar() {
             <li className="pt-2">
               <a
                 href={CTA.href}
-                className="block px-5 py-3 text-sm font-medium text-center bg-brand-500 text-content-inverse rounded-card"
+                onClick={() => setOpen(false)}
+                className="block px-5 py-3 text-sm font-medium text-center bg-brand-500 text-content-inverse rounded-card hover:bg-brand-700 transition-colors"
               >
                 {CTA.label}
               </a>
